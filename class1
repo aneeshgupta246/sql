@@ -5,3 +5,21 @@ show databases;
 
 --command to drop a databse
 drop database aneeshdb;
+
+--go inside the particular database
+use bigdata;
+
+--command to create a table
+Create table if not exists employee
+(
+    id INT,
+    name VARCHAR(50)
+
+);
+
+--command to list down all the tables
+Show create table employee;
+
+
+
+
