@@ -1,4 +1,7 @@
 --command to creat databse
 create database bigdata;
 --to list down all the databases
-show databses;
+show databases;
+
+--command to drop a databse
+drop database aneeshdb;
