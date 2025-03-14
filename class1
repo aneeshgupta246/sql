@@ -20,6 +20,15 @@ Create table if not exists employee
 --command to list down all the tables
 Show create table employee;
 
+--command to delete the table 
 
+drop table employee;
 
-
+--command to craete a table
+create Table if not exists employee
+(
+    employid INT,
+    nameoftheemployee varchar(20),
+    salary DOUBLE,
+    hiringdate DATE
+);
