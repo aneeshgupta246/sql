@@ -32,3 +32,22 @@ create Table if not exists employee
     salary DOUBLE,
     hiringdate DATE
 );
+
+--syntax 1 to insert data into the table
+insert into employee value
+(
+1,'aneesh',1000,'2020-02-02'
+);
+
+--2nd way to insert the data by using specific column name
+insert into employee(employid,nameoftheemployee,salary) VALUE(2,'sachin',2000);
+
+insert into employee(employid,nameoftheemployee,salary) VALUE(3,'aneesh',20000);
+
+--insert multiples row at a single time
+
+insert into employee VALUES(4,'aneesh',2000,'2020-02-08'),(5,'anesh',2000,'2020-02-07'),(6,'anesh',2000,'2020-02-07');
+
+--use select command to query the data from the table
+
+select * from employee;
