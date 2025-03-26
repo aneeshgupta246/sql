@@ -43,3 +43,15 @@ select * from employee;
 -- add a unique constraint on the id column
 
 alter table employee add constraint unique_id unique(roll);
+
+insert into employee values(1, 'John', '123 Main St', '2021-08-09');
+
+-- the above command did nt get executed because we already have the entry for roll 1 so we have to drop constraint from existing table 
+
+alter table employee drop constraint unique_id;
+
+insert into employee values(1, 'John', '123 Main St', '2021-08-09');\
+
+-- the above command will get executed successfully
+
+select * from employee;
