@@ -1,1 +1,35 @@
-create database class2
+CREATE database class2db;
+
+use class2db;
+
+create table if not exists employee(
+    id INT,
+    name varchar(50),
+    address varchar(50),
+    city Varchar(50)
+);
+
+insert into employee values(1, 'John', '123 Main St', 'New York');
+insert into employee values(2, 'Jane', '456 Elm St', 'Los Angeles');
+insert into employee values(3, 'Jim', '789 Oak St', 'Chicago');
+
+select * from employee;
+
+# add new column named date of birth in the table
+
+alter table employee add DOB date;
+
+select * from employee;
+
+--change or modify existing column in a column or chnage dtat type of name column or increase length of name column
+
+alter table employee modify name varchar(100);
+ALTER TABLE employee modify address VARCHAR(100);
+
+select * from employee;
+
+--- delete existing column from given table for example to remove city column from table employee
+
+alter table employee drop column city;
+
+select * from employee;
