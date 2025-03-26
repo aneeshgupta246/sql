@@ -3,7 +3,7 @@ CREATE database class2db;
 use class2db;
 
 create table if not exists employee(
-    id INT,
+    roll INT,
     name varchar(50),
     address varchar(50),
     city Varchar(50)
@@ -33,3 +33,13 @@ select * from employee;
 alter table employee drop column city;
 
 select * from employee;
+
+-- rename the column to full name from name
+
+alter table employee rename column name to full_name;
+
+select * from employee;
+
+-- add a unique constraint on the id column
+
+alter table employee add constraint unique_id unique(roll);
