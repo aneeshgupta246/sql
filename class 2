@@ -97,3 +97,11 @@ insert into persons values(4, 'Jim', '789 Oak St', null);
 --- the above command will get executed successfully because we have not added any constraint on null values
 
 select * from persons;
+
+insert into persons values(5, 'Jdim', '78d9 Oak St', null);
+
+--- the above command will get executed successfully as here the system is treating every null as a diifferent value but this doesn't generally happen in other databases like oracle or sql server
+
+insert into persons values(6, 'Jdim', '78d9 Oak St', 78);
+
+Select * from persons;
