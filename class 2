@@ -87,6 +87,9 @@ insert into persons values(null, 'Jim', '789 Oak St', 35);
 
 alter table persons add constraint age_unq unique (age);
 
+--- for differnce between unique key and primary key see the below example
+--- primary key does not allow null values but unique key allows null values
+
 select * from persons;
 insert into persons values(3, 'Jim', '789 Oak St', 25);
 
@@ -105,3 +108,26 @@ insert into persons values(5, 'Jdim', '78d9 Oak St', null);
 insert into persons values(6, 'Jdim', '78d9 Oak St', 78);
 
 Select * from persons;
+
+
+--- craete tables for foreign key demo 
+
+create table customer
+(
+customer_id int,
+name varchar(50),
+age int,
+
+constraint pk primary key(customer_id)
+);
+
+create table orders
+(
+order_id int,
+order_num int,
+cust_id int,
+
+constraint pk primary key(order_id),
+constraint fk foreign key (cust_id) REFERENCES customer(customer_id)
+);
+
