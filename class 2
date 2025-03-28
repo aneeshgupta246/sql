@@ -56,7 +56,6 @@ insert into employee values(1, 'John', '123 Main St', '2021-08-09');\
 
 select * from employee;
 
-
  
 --create table with primary key
 
@@ -73,3 +72,28 @@ create table persons
 
 select * from persons;
 
+insert into persons values(1, 'John', '123 Main St', 25);
+insert into persons values(2, 'Jane', '456 Elm St', 30);
+
+insert into persons values(1, 'Jim', '789 Oak St', 35);
+
+--- this will not get executed because we already have the entry for id 1
+
+select * from persons;
+
+insert into persons values(null, 'Jim', '789 Oak St', 35);
+
+--- column id cannot be null because we have defined it as primary key so we have to drop the primary key constraint from the table
+
+alter table persons add constraint age_unq unique (age);
+
+select * from persons;
+insert into persons values(3, 'Jim', '789 Oak St', 25);
+
+--- the above command will not get executed successfully because we have added unique constraint on age column 
+
+insert into persons values(4, 'Jim', '789 Oak St', null);
+
+--- the above command will get executed successfully because we have not added any constraint on null values
+
+select * from persons;
