@@ -55,3 +55,21 @@ insert into employee values(1, 'John', '123 Main St', '2021-08-09');\
 -- the above command will get executed successfully
 
 select * from employee;
+
+
+ 
+--create table with primary key
+
+create table persons
+(
+    id INT,
+    name varchar(50),
+    address varchar(50),
+    age int,
+    --- primary key(id) or primary key(id,name) is a composite key
+
+    constraint pk primary key(id)
+)
+
+select * from persons;
+
