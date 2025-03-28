@@ -131,3 +131,18 @@ constraint pk primary key(order_id),
 constraint fk foreign key (cust_id) REFERENCES customer(customer_id)
 );
 
+--- differnce between the drop and truncate command 
+
+Select * from persons;
+
+truncate table persons;
+
+Select * from persons;
+
+--- the table is still showing as after trucate only table schema is lost not the table
+
+drop table persons;
+
+Select * from persons;
+
+--- the above command will nto executed as we have dropped the table as well as the schema
