@@ -1,0 +1,38 @@
+create database test_db;
+
+use test_db;
+
+create table if not exists employee(
+    id INT,
+    name varchar(50),
+    age int,
+    hiring_date date,
+    salary int,
+    city Varchar(50)
+);
+
+insert into employee values (1,"shsahsnk",24,"2020-02-02",1000,"noida");
+insert into employee values (2,"John",28,"2019-03-15",2000,"New York"),
+(3,"Jane",32,"2018-07-10",2500,"Los Angeles"),
+(4,"Jim",29,"2021-01-20",1800,"Chicago"),
+(5,"Alice",26,"2020-05-25",2200,"Houston"),
+(6,"Bob",35,"2017-11-30",3000,"Phoenix"),
+(7,"Charlie",30,"2016-09-12",2700,"Philadelphia"),
+(8,"Diana",27,"2022-04-18",1900,"San Antonio"),
+(9,"Eve",31,"2015-08-22",3100,"San Diego"),
+(10,"Frank",33,"2014-12-05",3200,"Dallas"),
+(11,"Grace",25,"2023-03-01",1700,"San Jose"),
+(12,"Hank",34,"2013-06-15",3300,"Austin"),
+(13,"Ivy",28,"2021-10-10",2100,"Jacksonville"),
+(14,"Jack",29,"2020-08-08",2300,"Fort Worth"),
+(15,"Karen",30,"2019-02-14",2400,"Columbus"),
+(16,"Leo",31,"2018-11-11",2600,"Charlotte"),
+(17,"Mona",32,"2017-07-07",2800,"San Francisco"),
+(18,"Nina",33,"2016-05-05",2900,"Indianapolis"),
+(19,"Oscar",34,"2015-03-03",3000,"Seattle"),
+(20,"Paul",35,"2014-01-01",3100,"Denver");
+
+select * from employee;
+
+
+
