@@ -34,5 +34,24 @@ insert into employee values (2,"John",28,"2019-03-15",2000,"New York"),
 
 select * from employee;
 
+# how to perform multi update
 
+SET sql_safe_updates = 0; # do not need for vs code
+
+update employee set age=20, salary=25000 where hiring_date = '2015-03-03';
+
+select * from employee;
+
+
+create table auto_inc_example(
+id int auto_increment,
+name varchar(20),
+primary key(id)
+);
+
+
+insert into auto_inc_example(name) values('shashank');
+insert into auto_inc_example(name) values('sahil');
+
+select * from auto_inc_example;
 
