@@ -145,3 +145,59 @@ Select * from employee WHERE age is null;
 
  
  Select * from employee WHERE salary  is not null;
+ 
+ # table and data for group by
+ 
+ create table amazon
+ (
+ customerid int,
+ orderid int,
+ country varchar(50),
+ state varchar(50)
+ );
+ 
+ 
+ Insert into amazon values(1,100,'usa','texas');
+ Insert into amazon values(1,100,'usa','texas');
+Insert into amazon values(1,100,'usa','texas');
+  Insert into amazon values(2,900,'india','madhya pradesh'); 
+  Insert into amazon values(3,300,'usa','north carolina');
+   Insert into amazon values(4,200,'india','punjab');
+    Insert into amazon values(5,800,'usa','california');
+     Insert into amazon values(6,600,'africa','south africa');
+      Insert into amazon values(7,500,'usa','dc');
+      
+      select * from amazon;
+      
+# calculate total order placed country wise
+
+select country,customerid, count(*) as order_count from amazon group by country;
+# error: SELECT list is not in GROUP BY clause and contains nonaggregated column 'test_db.amazon.customerid'
+
+SELECT COUNTRY, count(*) as order_count from amazon group by country;
+
+SELECT * FROM EMPLOYEE;
+
+UPDATE EMPLOYEE SET AGE= 25 WHERE ID = 10;
+
+UPDATE EMPLOYEE SET SALARY = 5000, AGE=22 WHERE ID = 11;
+
+SELECT * FROM EMPLOYEE;
+
+# FIND THE  TOTAL SALARY BY each age group
+
+select age, sum(salary) as total_salary from employee group by age;
+
+#calculate different aggregated metrics for salary
+
+select age, 
+           sum(salary) as total_salary,
+            max(salary) as max_salary,
+             min(salary) as min_salary,
+              count(*) as total_employees_by_each_group
+from employee group by age;
+
+
+
+
+
