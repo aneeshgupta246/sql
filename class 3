@@ -109,3 +109,19 @@ select * from employee where salary <5000  and hiring_date= '2014-01-01';
  # get all employees data who joined between hiring date 01-01-2014 and 11-11-2018
  
  select * from employee where hiring_date between '2014-01-01' and '2018-11-11';
+ 
+ # how to use like operation in where clause;
+# % -> zero, one  or more than one characters
+#_ -> only one charcter
+
+# get all those employees whose name starts from s
+
+select * from employee where name like 's%';
+
+# get all those employees whose name ends in r
+
+select * from employee where name like '%r';
+
+# get all those employees whose name starts with p and ends with l
+
+select * from employee where name like 'p%l';
