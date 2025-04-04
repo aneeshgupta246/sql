@@ -125,3 +125,7 @@ select * from employee where name like '%r';
 # get all those employees whose name starts with p and ends with l
 
 select * from employee where name like 'p%l';
+
+# select all those employees whose name will have exact 5 charcters
+
+select * from employee where name like '_____';
