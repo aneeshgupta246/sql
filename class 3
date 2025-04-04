@@ -92,20 +92,20 @@ select * from employee where age = 20;
 
 # filter the record where age of employees is not equal to 20;'
 
-select * from employee where age =! 20;
-# this is a python syntax so this will not work
-
+select * from employee where age != 20;
 
 select * from employee where age <> 20;
-# this will work
 
+# find those employees who joined the company on 2014-01-01 and their salary is less than 5000;
 
-
-
-
-
-
-
-
-
-
+select * from employee where salary <5000  and hiring_date= '2014-01-01';
+ 
+ # find those employees who Joinedthe company after 2014-01-01 or their slary is less than 20000;
+ 
+ select * from employee where hiring_date>'2014-01-01'  or salary <20000;
+ 
+ # how to use between operation in where clause
+ 
+ # get all employees data who joined between hiring date 01-01-2014 and 11-11-2018
+ 
+ select * from employee where hiring_date between '2014-01-01' and '2018-11-11';
