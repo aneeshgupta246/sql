@@ -136,3 +136,12 @@ insert into employee values(10,'kapil',null,'2022-05-05',1000,'assam');
 insert into employee values(10,'singh',30,'2022-05-05',null,'punjab');
 
 Select * from employee;
+
+# GET ALL THOSE EMPLOYEES WHERE AGE VALUE IS NULL
+
+Select * from employee WHERE age is null;
+
+# GET ALL THOSE EMPLOYEES WHERE salary VALUE IS not null;
+
+ 
+ Select * from employee WHERE salary  is not null;
