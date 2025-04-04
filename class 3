@@ -72,3 +72,8 @@ select * from employee order by name desc;
 #in ascending order of name
 
 select * from employee order by salary desc, name asc;
+
+# write a query to fund a employee who is getting maximum slary
+
+select * from employee order by salary desc limit 1;
+
