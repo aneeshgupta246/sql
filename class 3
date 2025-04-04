@@ -129,3 +129,10 @@ select * from employee where name like 'p%l';
 # select all those employees whose name will have exact 5 charcters
 
 select * from employee where name like '_____';
+
+# how to use is not null or is null in where clause
+
+insert into employee values(10,'kapil',null,'2022-05-05',1000,'assam');
+insert into employee values(10,'singh',30,'2022-05-05',null,'punjab');
+
+Select * from employee;
