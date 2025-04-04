@@ -77,3 +77,35 @@ select * from employee order by salary desc, name asc;
 
 select * from employee order by salary desc limit 1;
 
+# what are the conditional operators ->  <,>,<=,>=
+# what are the conditional operators ->  and, or , not
+
+select * from employee;
+
+# list all emoloyees where salary is less than equal to 20000
+
+select * from employee where salary <=20000;
+
+# filter the record where age of employees is equal to 20;
+
+select * from employee where age = 20;
+
+# filter the record where age of employees is not equal to 20;'
+
+select * from employee where age =! 20;
+# this is a python syntax so this will not work
+
+
+select * from employee where age <> 20;
+# this will work
+
+
+
+
+
+
+
+
+
+
+
