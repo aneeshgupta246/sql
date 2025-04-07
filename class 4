@@ -1,2 +1,47 @@
 CREATE DATABASE test;
 USE test;
+
+create table amazon
+ (
+ customerid int,
+ orderid int,
+ country varchar(50),
+ state varchar(50)
+ );
+
+ Insert into amazon values(1,100,'usa','texas');
+ Insert into amazon values(1,100,'usa','texas');
+Insert into amazon values(1,100,'usa','texas');
+  Insert into amazon values(2,900,'india','madhya pradesh'); 
+  Insert into amazon values(3,300,'usa','north carolina');
+   Insert into amazon values(4,200,'india','punjab');
+    Insert into amazon values(5,800,'usa','california');
+     Insert into amazon values(6,600,'africa','south africa');
+      Insert into amazon values(7,500,'usa','dc');
+
+Select * from amazon;
+
+# use of having clause
+# write a query top find a country where only one customer is there
+select country from amazon group by country having count(*)=1;
+
+# where clause is used to filter the records before grouping and having clause is used to filter the records after grouping
+
+# how to use group concant
+# group concat is used to concatenate the values of a column into a single string
+
+# for example, if we have a table with customer id and order id, we can use group concat to get a list of order ids for each customer id
+
+# write a query to print distinct states present in the dataset for each country
+select country, group_concat(state) as states_from_country from amazon group by country;
+
+#to remove duplicates from the list of states, we can use distinct keyword in group_concat function
+select country, group_concat( distinct state) as states_from_country from amazon group by country;
+
+# write a query to print distinct states present in the dataset for each country and order them in descending order 
+select country, group_concat( distinct state order by state desc) as states_from_country from amazon group by country;
+
+#separator keyword is used to specify the separator between the values in the concatenated string. By default, it is comma(,). We can change it to any other character or string.
+# for example, if we want to use space as separator, we can use the following query
+select country, group_concat( distinct state order by state desc separator '-') as states_from_country from amazon group by country;
+
