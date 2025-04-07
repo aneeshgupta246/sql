@@ -114,3 +114,53 @@ SELECT * FROM CUSTOMER_ORDERS WHERE COUNTRY IN (SELECT DISTINCT COUNTRY FROM SUP
 # write a query to print all CUSTOMER ORDER DATA orders where supplier is NOT LIVING IN THE SAME COUNTRY AS CUSTOMER
 SELECT * FROM CUSTOMER_ORDERS WHERE COUNTRY NOT IN (SELECT DISTINCT COUNTRY FROM SUPPLIER_DATA);
 
+
+#case when in sql
+# case when is used to perform conditional operations in sql. It is similar to if-else statement in programming languages.
+Create table students
+(
+ id int,
+ name varchar(50),
+ marks int
+);
+
+insert into students values(1,'john',100);
+insert into students values(2,'jane',200);
+insert into students values(3,'jack',300);          
+insert into students values(4,'jill',400);
+insert into students values(5,'james',500);
+insert into students values(6,'jake',600);
+insert into students values(7,'jall',700);
+
+insert into students values(8,'james',800);
+insert into students values(9,'jaky',900);
+
+insert into students values(10,'jilly',990);
+
+select * from students;
+
+
+# write a query to calculate the grade of each student based on their marks
+# if marks >= 900 then grade = A+
+# if marks < 900 and marks >=800 then grade = A
+# if marks < 800 and marks >= 700 then grade = A-
+# if marks < 700 and marks >= 600 then grade = B+       
+# if marks < 600 and marks >= 500 then grade = B
+# if marks < 500 and marks >= 400 then grade = C+
+# if marks < 400 and marks >= 300 then grade = C
+# if marks < 300 then grade = F
+
+SELECT
+    id, name, marks,
+    CASE
+        WHEN marks >= 900 THEN 'A+'
+        WHEN marks < 900 AND marks >= 800 THEN 'A'
+        WHEN marks < 800 AND marks >= 700 THEN 'A-'
+        WHEN marks < 700 AND marks >= 600 THEN 'B+'
+        WHEN marks < 600 AND marks >= 500 THEN 'B'
+        WHEN marks < 500 AND marks >= 400 THEN 'C+'
+        WHEN marks < 400 AND marks >= 300 THEN 'C'
+        ELSE 'F'
+    END AS grade
+
+    from students;
