@@ -69,3 +69,48 @@ select * from employees where saalry > (select saalry from employees where name=
 # write a query to print all those employees whose salary is greater than jack's salary and less than jill's salary
 select * from employees where saalry > (select saalry from employees where name='john') and saalry < (select saalry from employees where name='jill');
 
+# lookup function use of in and not in
+
+# write a query to print all orders which were placed in madhya pradesh and punjab
+
+#wrong solution --> select * from amazon where state = 'madhya pradesh' or state = 'punjab';
+select * from amazon where state in ('madhya pradesh','punjab');
+
+create table customer_orders
+(
+ order_id int,
+ cust_id int,
+ supp_id int,
+country varchar(50)
+);
+
+insert into customer_orders values(1,101,100,'usa');
+insert into customer_orders values(2,102,200,'usa');   
+insert into customer_orders values(3,103,300,'india');
+insert into customer_orders values(4,104,400,'pakistan');
+
+insert into customer_orders values(5,105,500,'UK');
+
+select * from customer_orders;
+
+create table supplier_data
+(
+ supp_id int,
+ country varchar(50)
+);
+
+insert INTO SUPPLIER_DATA VALUES(100,'usa');
+insert INTO SUPPLIER_DATA VALUES(200,'usa');
+insert INTO SUPPLIER_DATA VALUES(300,'india');
+insert INTO SUPPLIER_DATA VALUES(400,'pakistan');
+
+insert INTO SUPPLIER_DATA VALUES(500,'UAE');
+
+SELECT * FROM SUPPLIER_DATA;\
+
+# write a query to print all CUSTOMER ORDER DATA orders where supplier is LIVING IN THE SAME COUNTRY AS CUSTOMER
+SELECT * FROM CUSTOMER_ORDERS WHERE COUNTRY IN (SELECT DISTINCT COUNTRY FROM SUPPLIER_DATA);
+
+# write a query to print all CUSTOMER ORDER DATA orders where supplier is NOT LIVING IN THE SAME COUNTRY AS CUSTOMER
+SELECT * FROM CUSTOMER_ORDERS WHERE COUNTRY NOT IN (SELECT DISTINCT COUNTRY FROM SUPPLIER_DATA);
+
