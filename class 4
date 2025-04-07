@@ -45,3 +45,27 @@ select country, group_concat( distinct state order by state desc) as states_from
 # for example, if we want to use space as separator, we can use the following query
 select country, group_concat( distinct state order by state desc separator '-') as states_from_country from amazon group by country;
 
+create table employees
+(
+ id int,
+ name varchar(50),
+ saalry int
+);
+
+insert into employees values(1,'john',1000);
+insert into employees values(2,'jane',2000);
+insert into employees values(3,'jack',3000);
+insert into employees values(4,'jill',4000);        
+insert into employees values(5,'james',5000);
+insert into employees values(6,'jake',6000);
+
+select * from employees;
+
+# write a query to print all those employees whose salary is greater than jack's salary
+
+# wrong solution --> select * from employees where saalry > 6000;
+select * from employees where saalry > (select saalry from employees where name='jack');
+
+# write a query to print all those employees whose salary is greater than jack's salary and less than jill's salary
+select * from employees where saalry > (select saalry from employees where name='john') and saalry < (select saalry from employees where name='jill');
+
