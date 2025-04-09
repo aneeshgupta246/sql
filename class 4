@@ -182,3 +182,39 @@ CASE
     when parent  is null then 'root'
     ELSE  'inner'
 END as node_type from trees;
+
+
+# amazon inetrview question  
+
+create table transactions
+(
+ trx_date date,
+ merchant varchar(50),
+ amount int,
+ mode Varchar(50)
+);
+
+insert into transactions values('2022-04-02','m1',150,'cash');
+insert into transactions values('2022-04-02','m2',500,'online');
+insert into transactions values('2022-04-03','m2',450,'online');
+insert into transactions values('2022-04-03','m1',100,'cash');
+insert into transactions values('2022-04-03','m3',600,'cash');
+insert into transactions values('2022-04-05','m5',200,'online');
+insert into transactions values('2022-04-05','m2',100,'online');
+
+
+update transactions set mode = 'cash', merchant = 'm1' where amount = 500 and trx_date = '2022-04-02';
+
+select * from transactions;
+
+select merchant,
+      sum(case when mode = 'cash' then amount else 0 end) as cash_amount,
+      sum(case when mode = 'online' then amount else 0 end) as online_amount
+from transactions group by merchant;
+
+# joins ther are four types of joins in sql
+# 1. inner join
+# 2. left join
+# 3. right join
+# 4. full outer join
+
