@@ -251,6 +251,7 @@ select * from customers;
 # we could also have done the primary key and foreign key concept
 # get the customer information for each order, if value of customer is present in orders table
 
+#inner join
 
 select
 o.*,c.*
@@ -286,3 +287,48 @@ right join customers C on O.cust_id = C.cust_id;
 
 # how to join more than 2 databases
 
+create table shipper
+(
+ shipper_id int,
+ shipper_name varchar(50)
+);
+
+insert into shipper values(1,'dhl');
+insert into shipper values(3,'fedex');
+
+select * from shipper;
+
+
+# get the customer information for each order, if value of customer is present in orders table 
+#also get shipper name
+
+#first inner join of first 2 tables and then inner join with the third table
+
+select
+o.*, c.*, s.*
+from orders O
+inner join customers C on O.cust_id = C.cust_id
+inner join shipper S on O.shipper_id = S.shipper_id;
+
+create table employees_full_time
+(
+ emp_id int,
+ name varchar(50),
+ mgr_id int
+);
+
+insert into employees_full_time values(1,'john',3);
+insert into employees_full_time values(2,'jane',4);
+insert into employees_full_time values(3,'jack',1);      
+insert into employees_full_time values(4,'jill',4);
+insert into employees_full_time values(5,'james',1);
+insert into employees_full_time values(6,'jake',null);
+ select * from employees_full_time;
+
+update employees_full_time set mgr_id = 2 where emp_id = 3;
+update employees_full_time set mgr_id = 1 where emp_id = 6;
+update employees_full_time set mgr_id = null where emp_id = 4;
+
+# write a query to print distinct names of managers??
+
+select 
