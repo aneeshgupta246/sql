@@ -55,3 +55,4 @@ inner join customers c on o.cust_id=c.id and o.amount >400;
 # and not on the result set
 
 # window functions
+
