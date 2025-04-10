@@ -331,4 +331,17 @@ update employees_full_time set mgr_id = null where emp_id = 4;
 
 # write a query to print distinct names of managers??
 
-select 
+#we can do this by using self join or subquery
+
+
+#subquery
+
+select distinct name from employees_full_time where emp_id in (select distinct mgr_id from employees_full_time where mgr_id is not null);
+
+#self join
+
+SELECT DISTINCT e2.name AS manager_name
+FROM employees_full_time e1
+JOIN employees_full_time e2
+  ON e1.mgr_id = e2.emp_id
+WHERE e1.mgr_id IS NOT NULL;
