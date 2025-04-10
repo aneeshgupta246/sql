@@ -49,3 +49,9 @@ where o.amount >400;
 select c.*,o.* 
 from orders o
 inner join customers c on o.cust_id=c.id and o.amount >400;
+
+# the second one will take less time than the first one
+# because the where condition is applied on the join condition
+# and not on the result set
+
+# window functions
