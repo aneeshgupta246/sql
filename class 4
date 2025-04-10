@@ -218,3 +218,71 @@ from transactions group by merchant;
 # 3. right join
 # 4. full outer join
 
+create table orders
+(
+ order_id int,
+ cust_id int,
+ order_date DATE,
+ shipper_id int
+);
+
+create table customers
+(
+ cust_name varchar(50),
+ cust_id int,
+ country varchar(50)
+);
+
+insert into orders values(138,2,'2022-04-02',3);
+insert into orders values(139,3,'2022-04-016',1);
+insert into orders values(140,1,'2022-04-19',2);
+insert into orders values(141,43,'2022-04-20',4);
+
+insert into customers VALUES('john',1,'india');
+insert into customers VALUES('jane',2,'usa'); 
+insert into customers VALUES('jack',3,'uk');
+
+insert into customers VALUES('jill',5,'canada');
+
+select * from orders;
+select * from customers;
+
+# perform inner join on orders and customers table
+# we could also have done the primary key and foreign key concept
+# get the customer information for each order, if value of customer is present in orders table
+
+
+select
+o.*,c.*
+from orders O
+
+inner join customers C on O.cust_id = C.cust_id;
+
+
+# left join
+
+select
+o.*,c.*
+from orders O
+
+left join customers C on O.cust_id = C.cust_id;
+
+# right join
+
+select
+o.*,c.*
+from orders O
+
+right join customers C on O.cust_id = C.cust_id;
+
+# full outer join
+
+#select
+#o.*,c.*
+#from orders O
+#full outer join customers C on O.cust_id = C.cust_id;
+
+# dont know the correct syntax for full outer join in mysql
+
+# how to join more than 2 databases
+
