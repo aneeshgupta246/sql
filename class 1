@@ -1,0 +1,94 @@
+--command to creat databse
+create database bigdata;
+--to list down all the databases
+show databases;
+
+--command to drop a databse
+drop database aneeshdb;
+
+--go inside the particular database
+use bigdata;
+
+--command to create a table
+Create table if not exists employee
+(
+    id INT,
+    name VARCHAR(50)
+
+);
+
+--command to list down all the tables
+Show create table employee;
+
+--command to delete the table 
+
+drop table employee;
+
+--command to craete a table
+create Table if not exists employee
+(
+    employid INT,
+    nameoftheemployee varchar(20),
+    salary DOUBLE,
+    hiringdate DATE
+);
+
+--syntax 1 to insert data into the table
+insert into employee value
+(
+1,'aneesh',1000,'2020-02-02'
+);
+
+--2nd way to insert the data by using specific column name
+insert into employee(employid,nameoftheemployee,salary) VALUE(2,'sachin',2000);
+
+insert into employee(employid,nameoftheemployee,salary) VALUE(3,'aneesh',20000);
+
+--insert multiples row at a single time
+
+insert into employee VALUES(4,'aneesh',2000,'2020-02-08'),(5,'anesh',2000,'2020-02-07'),(6,'anesh',2000,'2020-02-07');
+
+--use select command to query the data from the table
+
+select * from employee;
+
+--examples for integrity constraints
+
+create Table if not exists employeewithintegrityconstraints
+(
+    employid INT not null,
+    nameoftheemployee varchar(20) not null,
+    salary DOUBLE,
+    hiringdate DATE default '2020-02-02',
+    unique (employid),
+    check(salary > 1000)
+
+);
+
+--example 1 for integrity constraints failure
+
+INSERT into employeewithintegrityconstraints values(4,'aneesh',2000,'2000-02-02');
+
+--example 2 for integrity constraints failure
+
+insert into employeewithintegrityconstraints values(5,'hashan',8111111,'2020-02-20');
+
+
+select * from employeewithintegrityconstraints;
+
+--if we have put constraints on various columns and we want to remove rom one or two we use alias name 
+
+create Table if not exists employeewithintegrityconstraints_temp
+(
+    employid INT not null,
+    nameoftheemployee varchar(20) not null,
+    salary DOUBLE,
+    hiringdate DATE default '2020-02-02',
+   constraint unique_id unique(employid),
+   constraint salary_check check (salary > 1000)
+
+);
+
+--example 1 for integrity constraints failure witha alias name constraints
+
+insert into employeewithintegrityconstraints_temp values(1,'aneesh',200,'2020-02-02');
