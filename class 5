@@ -85,24 +85,26 @@ select * from shop_sales_data;
 
 # Total count of sales for each shop using window function
 
-
 select *,
 COUNT(*) over(partition by shop_id) as total_sales_COUNT
 FROM shop_sales_data;
 
 # COMPARING IT WITH THE NORMAL GROUP BY
+
 select shop_id, 
 COUNT(sales_amt) as total_sales_SUM
 from shop_sales_data
 group by shop_id;
 
 # Total sales amount for each shop using window function
+
 select *,
 SUM(sales_amt) over(partition by shop_id) as total_sales_SUM    
 FROM shop_sales_data;
 
 
 # If we only use Partition By & Order By together
+
 select *,
        sum(sales_amount) over(partition by shop_id order by sales_amount desc) as total_sum_of_sales
 from shop_sales_data;
