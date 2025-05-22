@@ -47,16 +47,30 @@ inner join customers c on o.cust_id=c.id and o.amount >400;
 # because the where condition is applied on the join condition
 # and not on the result set
 
+# window functions
 
-
-# Window Functions
+# PARTITION BY - to divide the result set into partitions
+# ORDER BY - to order the result set
+# ROW_NUMBER() - to assign a unique number to each row in the result set
+# RANK() - to assign a unique number to each row in the result set, but it will assign the same number to rows with the same value
+# DENSE_RANK() - to assign a unique number to each row in the result set, but it will assign the same number to rows with the same value and will not leave gaps in the numbering
+# NTILE() - to divide the result set into a specified number of groups and assign a unique number to each group
+# SUM() - to calculate the sum of a column
+# AVG() - to calculate the average of a column  
+# MIN() - to calculate the minimum value of a column
+# MAX() - to calculate the maximum value of a column
+# COUNT() - to calculate the count of a column
 
 create table shop_sales_data
 (
-sales_date date,
-shop_id varchar(5),
-sales_amount int
+    sales_date date,
+    shop_id varchar(10),
+    sales_amt int
+    
 );
+
+select * from shop_sales_data;
+
 
 insert into shop_sales_data values('2022-02-14','S1',200);
 insert into shop_sales_data values('2022-02-15','S1',300);
@@ -66,18 +80,27 @@ insert into shop_sales_data values('2022-02-18','S1',400);
 insert into shop_sales_data values('2022-02-17','S2',250);
 insert into shop_sales_data values('2022-02-20','S3',300);
 
+select * from shop_sales_data;
+
+
 # Total count of sales for each shop using window function
-# Working functions - SUM(), MIN(), MAX(), COUNT(), AVG()
 
-# If we only use Order by In Over Clause
-select *,
-       sum(sales_amount) over(order by sales_amount desc) as total_sum_of_sales
-from shop_sales_data;
 
-# If we only use Partition By
 select *,
-       sum(sales_amount) over(partition by shop_id) as total_sum_of_sales
-from shop_sales_data;
+COUNT(*) over(partition by shop_id) as total_sales_COUNT
+FROM shop_sales_data;
+
+# COMPARING IT WITH THE NORMAL GROUP BY
+select shop_id, 
+COUNT(sales_amt) as total_sales_SUM
+from shop_sales_data
+group by shop_id;
+
+# Total sales amount for each shop using window function
+select *,
+SUM(sales_amt) over(partition by shop_id) as total_sales_SUM    
+FROM shop_sales_data;
+
 
 # If we only use Partition By & Order By together
 select *,
