@@ -276,6 +276,7 @@ from daily_sales;
 # query - calculate the difference of sales with previous day sales 
 
 #here null will be derived 
+
 select *,
  sales_amount as curr_day_sales,
        lag(sales_amount, 1) over(order by sales_date) as prev_day_sales,
@@ -290,24 +291,42 @@ select *,
        sales_Amount-lag(sales_amount, 1,0) over(order by sales_date) as sales_diff
 from daily_sales;
 
-
-# Diff between lead and lag
-select *,
-      lag(sales_amount, 1) over(order by sales_date) as pre_day_sales
-from daily_sales;
+# lead function will give us the next row value based on the order by clause
 
 select *,
-      lead(sales_amount, 1) over(order by sales_date) as next_day_sales
+      lead(sales_amount, 1) over(order by sales_date) as next_day_sales 
 from daily_sales;
 
-# Diff between lead and lag
-select *,
-      lag(sales_amount, 1) over(order by sales_date) as pre_day_sales
-from daily_sales;
+# query - calculate the difference of sales with next day sales
 
 select *,
-      lead(sales_amount, 1) over(order by sales_date) as next_day_sales
+ sales_amount as curr_day_sales,
+       lead(sales_amount, 1,0) over(order by sales_date) as next_day_sales,
+       sales_Amount-lead(sales_amount, 1,0) over(order by sales_date) as sales_diff
 from daily_sales;
+
+# first_value() function will give us the first row value based on the order by clause
+
+select *,
+      first_value(sales_amount) over(order by sales_date) as first_day_sales
+
+from daily_sales;
+
+# last_value() function will give us the last row value based on the order by clause
+
+select *,
+      last_value(sales_amount) over(order by sales_date) as last_day_sales
+
+from daily_sales;
+
+# nth_value() function will give us the nth row value based on the order by clause
+
+select *,
+      nth_value(sales_amount, 2) over(order by sales_date) as second_day_sales
+from daily_sales;
+
+
+
 
 
 # How to use Frame Clause - Rows BETWEEN
