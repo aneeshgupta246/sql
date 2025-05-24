@@ -325,9 +325,17 @@ select *,
       nth_value(sales_amount, 2) over(order by sales_date) as second_day_sales
 from daily_sales;
 
+# frame clauses are used to define the range of rows to be considered for the window function
 
+# ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW - will consider all the rows from the start of the partition to the current row
+# ROWS BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING - will consider all the rows from the current row to the end of the partition
+# ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING - will consider all the rows in the partition
 
+# RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW - will consider all the rows from the start of the partition to the current row based on the value of the column
+# RANGE BETWEEN CURRENT ROW AND UNBOUNDED FOLLOWING - will consider all the rows from the current row to the end of the partition based on the value of the column
+# RANGE BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING - will consider all the rows in the partition based on the value of the column
 
+# Example for frame clauses
 
 # How to use Frame Clause - Rows BETWEEN
 select * from daily_sales;
