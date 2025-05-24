@@ -51,9 +51,6 @@ inner join customers c on o.cust_id=c.id and o.amount >400;
 
 # PARTITION BY - to divide the result set into partitions
 # ORDER BY - to order the result set
-# ROW_NUMBER() - to assign a unique number to each row in the result set
-# RANK() - to assign a unique number to each row in the result set, but it will assign the same number to rows with the same value
-# DENSE_RANK() - to assign a unique number to each row in the result set, but it will assign the same number to rows with the same value and will not leave gaps in the numbering
 # NTILE() - to divide the result set into a specified number of groups and assign a unique number to each group
 # SUM() - to calculate the sum of a column
 # AVG() - to calculate the average of a column  
@@ -240,18 +237,28 @@ from employees;
 
 # Query - get all 2 ranked employee from each department who are getting maximum salary
 
-select*,
-dense_rank() over(partition by dept_name order by salary desc) as dense_rank_val
-from employees;
+select * from (
+    select *,
+         DENSE_RANK() over(partition by dept_name order by salary desc) as rank_val   
+    from employees
+) as ranked_employees
+where rank_val <= 2;
 
+# this will give us the employees with rank 1 and 2 in each department based on the salary in descending order
+
+# lag() function will give us the previous row value based on the order by clause
+# lead() function will give us the next row value based on the order by clause
+# first_value() function will give us the first row value based on the order by clause
+# last_value() function will give us the last row value based on the order by clause
+# nth_value() function will give us the nth row value based on the order by clause
 
 # Example for lag and lead
+
 create table daily_sales
 (
 sales_date date,
 sales_amount int
 );
-
 
 insert into daily_sales values('2022-03-11',400);
 insert into daily_sales values('2022-03-12',500);
@@ -266,20 +273,23 @@ select *,
       lag(sales_amount, 1) over(order by sales_date) as pre_day_sales
 from daily_sales;
 
-# Query - Calculate the differnce of sales with previous day sales
-# Here null will be derived
-select sales_date,
-       sales_amount as curr_day_sales,
+# query - calculate the difference of sales with previous day sales 
+
+#here null will be derived 
+select *,
+ sales_amount as curr_day_sales,
        lag(sales_amount, 1) over(order by sales_date) as prev_day_sales,
-       sales_amount - lag(sales_amount, 1) over(order by sales_date) as sales_diff
+       sales_Amount-lag(sales_amount, 1) over(order by sales_date) as sales_diff
 from daily_sales;
 
-# Here we can replace null with 0
-select sales_date,
-       sales_amount as curr_day_sales,
-       lag(sales_amount, 1, 0) over(order by sales_date) as prev_day_sales,
-       sales_amount - lag(sales_amount, 1, 0) over(order by sales_date) as sales_diff
+#here null will be replaced by 0
+
+select *,
+ sales_amount as curr_day_sales,
+       lag(sales_amount, 1,0) over(order by sales_date) as prev_day_sales,
+       sales_Amount-lag(sales_amount, 1,0) over(order by sales_date) as sales_diff
 from daily_sales;
+
 
 # Diff between lead and lag
 select *,
