@@ -156,7 +156,8 @@ SELECT *,
    AVG(sales_amt) over(order by sales_date) as rolling_avg_sales_amt    
 FROM amazon_sales_data;
 
-# Rank(), Row_Number(), Dense_Rank() window functions
+
+# to understand Rank(), Row_Number(), Dense_Rank() window functions
 
 insert into shop_sales_data values('2022-02-19','S1',400);
 insert into shop_sales_data values('2022-02-20','S1',400);
@@ -168,10 +169,20 @@ insert into shop_sales_data values('2022-02-16','S3',500);
 insert into shop_sales_data values('2022-02-18','S3',500);
 insert into shop_sales_data values('2022-02-19','S3',300);
 
+select * from shop_sales_data;
+
+# Rank() function will assign a unique number to each row in the result set based on the order by clause
+# if there are duplicate values in the order by clause, it will assign the same number to those rows and leave gaps in the numbering
+
+# Row_Number() function will assign a unique number to each row in the result set based on the order by clause
+# if there are duplicate values in the order by clause, it will assign a unique number to those rows without leaving gaps in the numbering
+
+# Dense_Rank() function will assign a unique number to each row in the result set based on the order by clause
+
 select *,
-       row_number() over(partition by shop_id order by sales_amount desc) as row_num,
-       rank() over(partition by shop_id order by sales_amount desc) as rank_val,
-       dense_rank() over(partition by shop_id order by sales_amount desc) as dense_rank_val
+       row_number() over(partition by shop_id order by sales_amt asc) as row_num,
+       rank() over(partition by shop_id order by sales_amt asc) as rank_val,
+       dense_rank() over(partition by shop_id order by sales_amt asc) as dense_rank_val
 from shop_sales_data;
 
 create table employees
@@ -197,37 +208,42 @@ select * from employees;
 
 # Query - get one employee from each department who is getting maximum salary (employee can be random if salary is same)
 
-select 
-    tmp.*
-from (select *,
-        row_number() over(partition by dept_name order by salary desc) as row_num
-    from employees) tmp
-where tmp.row_num = 1;
+select *,
+         row_number() over(partition by dept_name order by salary desc) as row_num
+from employees;
+
+# this will give us the row number for each employee in each department based on the salary in descending order
+# now we can filter the result set to get only the employees with row_num=1
+
+select *,
+         row_number() over(partition by dept_name order by salary desc) as row_num
+from employees
+where row_num=1;
+
+# this will not work because row_num is not a column in the table
+# so we need to use a subquery to get the row_num
+
+select * from (
+    select *,
+         row_number() over(partition by dept_name order by salary desc) as row_num
+    from employees
+) as emp
+where row_num=1;
+
+# this will give us the employees with maximum salary in each department
 
 # Query - get one employee from each department who is getting maximum salary (employee can be random if salary is same)
 
-select 
-    tmp.*
-from (select *,
-        row_number() over(partition by dept_name order by salary desc) as row_num
-    from employees) tmp
-where tmp.row_num = 1;
+select *,
+         rank() over(partition by dept_name order by salary desc) as rank_val
+from employees;
 
-# Query - get all employees from each department who are getting maximum salary
-select 
-    tmp.*
-from (select *,
-        rank() over(partition by dept_name order by salary desc) as rank_num
-    from employees) tmp
-where tmp.rank_num = 1;
-  
-# Query - get all top 2 ranked employees from each department who are getting maximum salary
-select 
-    tmp.*
-from (select *,
-        dense_rank() over(partition by dept_name order by salary desc) as dense_rank_num
-    from employees) tmp
-where tmp.dense_rank_num <= 2;
+# Query - get all 2 ranked employee from each department who are getting maximum salary
+
+select*,
+dense_rank() over(partition by dept_name order by salary desc) as dense_rank_val
+from employees;
+
 
 # Example for lag and lead
 create table daily_sales
