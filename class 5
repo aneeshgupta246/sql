@@ -90,53 +90,71 @@ COUNT(*) over(partition by shop_id) as total_sales_COUNT
 FROM shop_sales_data;
 
 # COMPARING IT WITH THE NORMAL GROUP BY
-
 select shop_id, 
-COUNT(sales_amt) as total_sales_SUM
+COUNT(sales_amt) as total_sales_count
 from shop_sales_data
 group by shop_id;
 
-# Total sales amount for each shop using window function
-
-select *,
-SUM(sales_amt) over(partition by shop_id) as total_sales_SUM    
+# also adding order by clause
+select *,       
+COUNT(*) over(partition by shop_id order by sales_date asc) as total_sales_COUNT
 FROM shop_sales_data;
 
+# here the order by clause will not affect the result set but it will affect the numbering of the rows no matter if we put asc or desc
+# this concept is known as moving window or moving sum or moving average
 
-# If we only use Partition By & Order By together
+# if we only use the order by clause in over clause
+# no partition by clause
+
+select *,   
+COUNT(*) over(order by sales_amt desc) as total_sales_COUNT
+FROM shop_sales_data;
+
+select *,   
+sum(sales_amt) over(order by sales_amt desc) as total_sumof_sales
+FROM shop_sales_data;
+
+# no partition window will be created and whole result set will be treated as a single partition and sum will be rolling sum
+
+# if we use the partition by clause
 
 select *,
-       sum(sales_amount) over(partition by shop_id order by sales_amount desc) as total_sum_of_sales
-from shop_sales_data;
+   sum(sales_amt) over(partition by shop_id) as total_sumof_sales
+FROM shop_sales_data;
+# here the sum will be rolling sum but only for the partitioned data
 
-select shop_id, count(*) as total_sale_count_by_shops from shop_sales_data group by shop_id;
+#IF WE USE PARTITION BY AND ORDER BY CLAUSE TOGETHER
+select *,
+   sum(sales_amt) over(partition by shop_id order by sales_amt DESC) as total_sum_of_sales   
+FROM shop_sales_data;
+# here the sum will be rolling sum but only for the partitioned data and ordered by sales_date
+
+#difference between rolling and running sum is that rolling sum will take the previous rows into account 
+#and running sum will take the current row into account
+
 
 create table amazon_sales_data
 (
-    sales_data date,
-    sales_amount int
-);
+    sales_date date,
+    sales_amt int
+    
+); 
 
-insert into amazon_sales_data values('2022-08-21',500);
-insert into amazon_sales_data values('2022-08-22',600);
-insert into amazon_sales_data values('2022-08-19',300);
+insert into amazon_sales_data values('2022-02-14',200);
+insert into amazon_sales_data values('2022-02-15',300);
+insert into amazon_sales_data values('2022-02-14',600);
+insert into amazon_sales_data values('2022-02-15',500);
+insert into amazon_sales_data values('2022-02-18',400);
+insert into amazon_sales_data values('2022-02-17',250);
+insert into amazon_sales_data values('2022-02-20',300);
 
-insert into amazon_sales_data values('2022-08-18',200);
 
-insert into amazon_sales_data values('2022-08-25',800);
+SELECT * FROM amazon_sales_data;
 
-
-# Query - Calculate the date wise rolling average of amazon sales
-select * from amazon_sales_data;
-
-select *,
-       avg(sales_amount) over(order by sales_data) as rolling_avg
-from amazon_sales_data;
-
-select *,
-       avg(sales_amount) over(order by sales_data) as rolling_avg,
-       sum(sales_amount) over(order by sales_data) as rolling_sum
-from amazon_sales_data;
+# calculate the date wise rolling avg of sales amount
+SELECT *,
+   AVG(sales_amt) over(order by sales_date) as rolling_avg_sales_amt    
+FROM amazon_sales_data;
 
 # Rank(), Row_Number(), Dense_Rank() window functions
 
