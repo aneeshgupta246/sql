@@ -366,7 +366,28 @@ from daily_sales;
 
 select *,
       sum(sales_amount) over(order by sales_date rows between unbounded preceding and unbounded following) as prev_plus_next_sales_sum
+from daily_sales;select *,
+      sum(sales_amount) over(order by sales_date rows between 1 preceding and 1 following) as prev_plus_next_sales_sum
 from daily_sales;
+
+select *,
+      sum(sales_amount) over(order by sales_date rows between 1 preceding and current row) as prev_plus_next_sales_sum
+from daily_sales;
+
+select *,
+      sum(sales_amount) over(order by sales_date rows between current row and 1 following) as prev_plus_next_sales_sum
+from daily_sales;
+
+select *,
+      sum(sales_amount) over(order by sales_date rows between 2 preceding and 1 following) as prev_plus_next_sales_sum
+from daily_sales;
+
+select *,
+      sum(sales_amount) over(order by sales_date rows between unbounded preceding and current row) as prev_plus_next_sales_sum
+from daily_sales;
+
+select *,
+      sum(sale
 
 # Alternate way to esclude computation of current row
 select *,
@@ -392,4 +413,3 @@ select * from daily_sales;
 select *,
        sum(sales_amount) over(order by sales_date range between interval '6' day preceding and current row) as running_weekly_sum
 from daily_sales;
-
