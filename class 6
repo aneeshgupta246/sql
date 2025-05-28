@@ -1,6 +1,6 @@
-create database test;
+create database class6;
 
-use test;
+use class6;
 
 create table employees(
   emp_id int,
@@ -15,22 +15,29 @@ insert into employees values(2,'Rahul',876778877,'IT',2000);
 insert into employees values(3,'Amit',098798998,'HR',5000);
 
 insert into employees values(4,'Nikhil',67766767,'IT',3000);
+insert into employees values(5,'Suresh',1234567890,'Finance',4000);
+
 
 select * from employees;
 
---- Create views in SQL
-create view employee_data_for_finance as select emp_id, emp_name,salary from employees;
+# create views in sql
 
-select * from employee_data_for_finance;
+create view emp_view_finance AS
+select emp_id, emp_name, mobile, salary from employees;
 
---- Create logic for department wise salary sum
-create view department_wise_salary as select dept_name, sum(salary) from employees group by dept_name;
+select * from emp_view_finance;
+# the logic behind the view is that it hides the complexity of the query from the user.
+# It allows users to access a simplified version of the data without needing to understand the underlying query.
+# under the hood it will be a select query on employees table. SElect * from (select emp_id, emp_name, mobile, salary from employees;)
 
-drop view department_wise_salary;
 
-create view department_wise_salary as select dept_name, sum(salary) as total_salary from employees group by dept_name;
+#create logic for department wise salary sum
 
-select * from department_wise_salary;
+create view deptwise_salary AS
+select dept_name, sum(salary) as total_salary from employees
+group by dept_name;
+
+select * from deptwise_salary;
 
 # Union and Union all
 
