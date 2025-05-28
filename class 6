@@ -102,6 +102,18 @@ select stu_id as id, name as student_name, email as student_email, city as stude
 union
 select stu_id as id, name as student_name, email as student_email, city as student_city from student2;
 
+
+#recursive query
+
+-- Recursive queries are used to retrieve data from hierarchical structures, such as organizational charts or bill of materials.
+-- They allow you to traverse a hierarchy and retrieve data at multiple levels.
+-- Recursive queries are typically implemented using Common Table Expressions (CTEs) or with clause in SQL.
+
+-- 2 types of with clause are there:
+
+-- 1. Non-recursive/Iterative with clause: This is used to define a temporary result set that can be referenced within a single query.'
+-- 2. Recursive with clause: This is used to define a recursive query that can reference itself to retrieve data from hierarchical structures.
+
 --- Common table expression
 
 create table amazon_employees(
@@ -124,38 +136,37 @@ create table amazon_employees(
     dept_name varchar(20) 
   );
 
-  insert into department values(100, 'Software');
+ insert into department values(100, 'Software');
     insert into department values(101, 'HR');
       insert into department values(102, 'IT');
         insert into department values(103, 'Finance');
 
 --- Write a query to print the name of department along with the total salary paid in each department
 --- Normal approach
+
 select d.dept_name, tmp.total_salary
 from (select dept_id , sum(salary) as total_salary from amazon_employees group by dept_id) tmp
 inner join department d on tmp.dept_id = d.dept_id;
 
---- how to do it using with clause??
-with dept_wise_salary as (select dept_id , sum(salary) as total_salary from amazon_employees group by dept_id)
+--- how to do it using iterative with clause??
 
+with dept_wise_salary as (select dept_id , sum(salary) as total_salary from amazon_employees group by dept_id)
 select d.dept_name, tmp.total_salary
 from dept_wise_salary tmp
 inner join department d on tmp.dept_id = d.dept_id;
 
-select * from dept_wise_salary;
-
+--- Recursive with clause
 
 --- Write a Query to generate numbers from 1 to 10 in SQL
 
 with recursive generate_numbers as   
 (
   select 1 as n
-  union 
-  select n+1 from generate_numbers where n<10
-) 
-
+  union
+  select n+1 from generate_numbers where n < 10
+)
 select * from generate_numbers;
-
+-- This query generates a sequence of numbers from 1 to 10 using a recursive Common Table Expression (CTE).
 
 create table emp_mgr
 (
@@ -179,23 +190,24 @@ insert into emp_mgr values(8,'Maryam',1,'Manager');
 
 select * from emp_mgr;
 
---- for our CTO 'Asha', present her org chart
+---for our cto "asha" we want to find out all the employees who are reporting to her directly or indirectly.
 
-with recursive emp_hir as  
+with recursive emp_hier AS
 (
-   select id, name, manager_id, designation from emp_mgr where name='Asha'
-   UNION
-   select em.id, em.name, em.manager_id, em.designation from emp_hir eh inner join emp_mgr em on eh.id = em.manager_id
+  select id, name, manager_id, designation from emp_mgr where name = 'Asha'  -- anchor query/Starting point: the employee we want to find subordinates for
+  union 
+  select em.id, em.name, em.manager_id, em.designation from emp_hier eh inner join emp_mgr em on eh.id = em.manager_id  -- recursive query: find employees managed by the previous level
 )
+select * from emp_hier;
+-- This query retrieves all employees who report directly or indirectly to the employee named 'Asha' using a recursive Common Table Expression (CTE).
+-- The recursive CTE starts with the employee 'Asha' and then recursively finds all employees managed by her, including those managed by their subordinates.
 
-select * from emp_hir;
+# to also the level of hierarchy we can add a level column in the emp_hier CTE
 
---- Print level of employees as well
-with recursive emp_hir as  
+with recursive emp_hier AS
 (
-   select id, name, manager_id, designation, 1 as lvl from emp_mgr where name='Asha'
-   UNION
-   select em.id, em.name, em.manager_id, em.designation, eh.lvl + 1 as lvl from emp_hir eh inner join emp_mgr em on eh.id = em.manager_id
+  select id, name, manager_id, designation,1 as lvl from emp_mgr where name = 'Asha'  -- anchor query/Starting point: the employee we want to find subordinates for
+  union 
+  select em.id, em.name, em.manager_id, em.designation, eh.lvl + 1 as lvl from emp_hier eh inner join emp_mgr em on eh.id = em.manager_id  -- recursive query: find employees managed by the previous level
 )
-
-select * from emp_hir;
+select * from emp_hier;
