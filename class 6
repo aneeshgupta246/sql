@@ -41,6 +41,9 @@ select * from deptwise_salary;
 
 # Union and Union all
 
+#union combines the results of two or more SELECT statements into a single result set, removing duplicates.
+#union all combines the results of two or more SELECT statements into a single result set, including duplicates.
+
 create table student
 (
     stu_id int,
@@ -54,6 +57,10 @@ create table student
   insert into student values(3,'Amit','ab2@gmail.com', 'noida');
    insert into student values(4,'Nikhil','abc3@gmail.com', 'bangalore');
     insert into student values(5,'Sunny','ab4@gmail.com', 'bangalore');
+
+select * from student;
+
+-- Creating a second table with similar structure to demonstrate UNION and UNION ALL
     
 create table student2
 (
@@ -72,46 +79,28 @@ insert into student2 values(1,'Shashank','abc@gmail.com', 'lucknow');
     
 select * from student2;
 
+-- Using UNION to combine results from both tables, removing duplicates
 
---- We are organizing an tournament between College-1 and College-2, we need details of all students from both college
 select * from student
-UNION
+union
+select * from student2; 
+
+-- Using UNION ALL to combine results from both tables, including duplicates
+
+select * from student       
+union all
 select * from student2;
 
---- how to use union all
-select * from student
-UNION ALL
-select * from student2;
+# here it is working so well because the table or columns are same in both the tables.
 
---- Case 1 - Not Failed
+# If the columns are not same then we can use alias to make them same.
+# For example, if we want to combine two tables with different column names, we can use aliases to make them match.
 
-select stu_id, `name` from student
-UNION
-select `name`, stu_id from student2;
+-- Example of using aliases to match columns for UNION
 
---- Case 2 - Not Failed
-select stu_id, name from student
-UNION
-select stu_id, name from student2;
-
---- Case 3 - Not Failed
-select stu_id as stu_id_college_1 , name from student
-UNION
-select stu_id as stu_id_college_2, name from student2;
-
---- Case 4 - Not Failed
-select stu_id from student
-UNION
-select email from student2;
-
-
-select 1 as salary
-UNION
-select 'Shashank' as name;
-
-select 1 as salary, 'Hello' as message
-UNION
-select 'Shashank' as name;
+select stu_id as id, name as student_name, email as student_email, city as student_city from student
+union
+select stu_id as id, name as student_name, email as student_email, city as student_city from student2;
 
 --- Common table expression
 
